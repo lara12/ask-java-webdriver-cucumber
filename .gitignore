@@ -1,5 +1,9 @@
 target/
 .idea/
+chromedriver
+chromedriver.exe
+geckodriver
+geckodriver.exe
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
