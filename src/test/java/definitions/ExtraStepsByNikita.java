@@ -1,5 +1,6 @@
 package definitions;
 
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -7,16 +8,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import java.util.Random;
-
 import static org.assertj.core.api.Assertions.fail;
 import static support.TestContext.getDriver;
 
 public class ExtraStepsByNikita {
     @Then("^I click on element with xpath \"([^\"]*)\" 2$")
-    public static void iClickOnElementWithXpath(String xpath) {
+    public void iClickOnElementWithXpath(String xpath) {
         for(int second = 0; ;second++){
             if(second >= 1000){
-                fail("Timeout for element" + xpath);
+                fail("Timeout for element: " + xpath);
             }
             try{
                 if(getDriver().findElement(By.xpath(xpath)).isDisplayed()){
@@ -29,7 +29,7 @@ public class ExtraStepsByNikita {
     }
 
     @Then("^I scroll to the element with xpath \"([^\"]*)\"$")
-    public static void iScrollToTheElementWithXpath(String xpath) {
+    public void iScrollToTheElementWithXpath(String xpath) {
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
         for(int second = 0; ;second++){
             if(second >= 1000){
@@ -47,7 +47,7 @@ public class ExtraStepsByNikita {
 
 
     @Then("^I Cut inputed data from field with xpath \"([^\"]*)\"$")
-    public static void iCutInputedDataFromFieldWithXpath(String xpath) {
+    public void iCutInputedDataFromFieldWithXpath(String xpath) {
         //created by Nikitos (copyright enable)
         getDriver().findElement(By.xpath(xpath)).sendKeys(Keys.CONTROL + "a");
         String result = getDriver().findElement(By.xpath(xpath)).getAttribute("value");
@@ -60,7 +60,7 @@ public class ExtraStepsByNikita {
     }
 
     @When("^I type \"([^\"]*)\" into element with xpath \"([^\"]*)\" 2$")
-    public static void iTypeIntoElementWithXpath(String text, String xpath) {
+    public void iTypeIntoElementWithXpath(String text, String xpath) {
         for(int second = 0; ;second++){
             if(second >= 1000){
                 fail("Timeout for element" + xpath);
@@ -85,7 +85,7 @@ public class ExtraStepsByNikita {
         //this limit will be generate random characters between ! and ~
         Random random = new Random();
         StringBuilder createdString = new StringBuilder(length);
-        for(int i = 0; i <= length; i++){
+        for(int i = 0; i < length; i++){
             int randomLimitedInt = leftlimit + (int)(random.nextFloat()*(rightlimit - leftlimit + 1));
             createdString.append((char)randomLimitedInt);
         }
@@ -100,7 +100,7 @@ public class ExtraStepsByNikita {
         int rightlimit = 57;
         Random random = new Random();
         StringBuilder createdString = new StringBuilder(length);
-        for(int i = 0; i <= length; i++){
+        for(int i = 0; i < length; i++){
             int randomLimitedInt = leftlimit + (int)(random.nextFloat()*(rightlimit - leftlimit + 1));
             createdString.append((char)randomLimitedInt);
         }
@@ -115,22 +115,13 @@ public class ExtraStepsByNikita {
         int rightlimit = 90;
         Random random = new Random();
         StringBuilder createdString = new StringBuilder(length);
-        for(int i = 0; i <= length; i++){
+        for(int i = 0; i < length; i++){
             int randomLimitedInt = leftlimit + (int)(random.nextFloat()*(rightlimit - leftlimit + 1));
             createdString.append((char)randomLimitedInt);
         }
         String buildedString = createdString.toString();
         System.out.println(buildedString);
         getDriver().findElement(By.xpath(xpath)).sendKeys(buildedString);
-    }
-
-    @Then("^Delete student \"([^\"]*)\"$")
-    public void deleteStudent(String xpath) {
-        iClickOnElementWithXpath("//*[contains(text(),'Management')]");
-        iScrollToTheElementWithXpath(xpath);
-        iClickOnElementWithXpath("//button[@color='accent']");
-        iClickOnElementWithXpath("//button[@role='menuitem']/..//*[contains(text(),'delete')]");
-        iClickOnElementWithXpath("//*[contains(text(),'Delete')]");
     }
 
     @Then("^I verify that required text \"([^\"]*)\" and text with xpath \"([^\"]*)\" is equal$")
@@ -173,4 +164,54 @@ public class ExtraStepsByNikita {
         }
     }
 
+    @Then("^element with xpath \"([^\"]*)\" should be displayed no delete \"([^\"]*)\" as \"([^\"]*)\" with \"([^\"]*)\" credentials$")
+    public void elementWithXpathShouldBeDisplayedNoDelete(String xpath, String name, String userrule, String credentials) throws InterruptedException {
+        boolean flag;
+        try {
+            flag = getDriver().findElement(By.xpath(xpath)).isDisplayed();
+        }catch(Exception e){
+            iDeleteUserWhichIsATeacher(name, userrule, credentials);
+            Thread.sleep(1000);
+            throw new PendingException();
+        }
+    }
+
+
+
+    PredefinedStepDefs st = new PredefinedStepDefs();
+    @Then("^I delete user \"([^\"]*)\" which is a \"([^\"]*)\" with \"([^\"]*)\" credentials other user$")
+    public void iDeleteUserWhichIsATeacher(String lastname, String userrule, String credentials) {
+        if(credentials.equals("")){
+            st.iOpenUrl("http://local.school.portnov.com:4520/#/login");
+            st.iTypeIntoElementWithXpath("nikita_teacher@amail.club","//input[@formcontrolname='email']");
+            st.iTypeIntoElementWithXpath("0123456789","//input[@formcontrolname='password']");
+            st.iClickOnElementWithXpath("//button[@type='submit']");
+        }
+        iClickOnElementWithXpath("//h5[contains(text(),'Management')]");
+        if(userrule.equals("Student")){
+            iClickOnElementWithXpath("(//div[@role='tab'])[1]");
+            iScrollToTheElementWithXpath("//h4[contains(text(),'"+lastname+"')]");
+            iClickOnElementWithXpath("//h4[contains(text(),'"+lastname+"')]");
+            iClickOnElementWithXpath("//button[@color='accent']");
+            iClickOnElementWithXpath("(//button[@role='menuitem'])[4]");
+        }else if(userrule.equals("Teacher")){
+            iClickOnElementWithXpath("(//div[@role='tab'])[2]");
+            iScrollToTheElementWithXpath("//h4[contains(text(),'"+lastname+"')]");
+            iClickOnElementWithXpath("//h4[contains(text(),'"+lastname+"')]");
+            iClickOnElementWithXpath("//button[@color='accent']");
+            iClickOnElementWithXpath("(//button[@role='menuitem'])[3]");
+        }
+        iClickOnElementWithXpath("(//button[@aria-label])[2]");
+    }
+
+    @And("^Revert to back \"([^\"]*)\" old \"([^\"]*)\" new1 \"([^\"]*)\"$")
+    public void revertToBackOldNew(String arg0, String old, String new1) throws Exception {
+        iClickOnElementWithXpath("//h5[contains(text(),'Setting')]");
+        iClickOnElementWithXpath("//span[contains(text(),'Change Your Password')]");
+        iTypeIntoElementWithXpath(old,"//input[@placeholder='Password']");
+        iTypeIntoElementWithXpath(new1,"//input[@placeholder='New Password']");
+        iTypeIntoElementWithXpath(new1,"//input[@placeholder='Confirm New Password']");
+        iClickOnElementWithXpath("(//button[@aria-label])[2]");
+        st.iWaitForSec(2);
+    }
 }
