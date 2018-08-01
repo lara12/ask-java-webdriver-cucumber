@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import java.util.Random;
+import java.util.Stack;
 import static org.assertj.core.api.Assertions.fail;
 import static support.TestContext.getDriver;
 
@@ -46,17 +47,23 @@ public class ExtraStepsByNikita {
     }
 
 
-    @Then("^I Cut inputed data from field with xpath \"([^\"]*)\"$")
-    public void iCutInputedDataFromFieldWithXpath(String xpath) {
-        getDriver().findElement(By.xpath(xpath)).sendKeys(Keys.CONTROL + "a");
-        String result = getDriver().findElement(By.xpath(xpath)).getAttribute("value");
-        if(result.equals("")){
-            System.out.println("Menu 'Cut' is enable");
-        }
-        else{
-            System.out.println("Menu 'Cut' is disable");
-        }
-    }
+//    @Then("^I Cut inputed data from field with xpath \"([^\"]*)\"$")
+//    public void iCutInputedDataFromFieldWithXpath(String xpath) {
+//        Stack<String> stack = new Stack<>();
+//        getDriver().findElement(By.xpath(xpath)).sendKeys(Keys.CONTROL + "a");
+//        getDriver().findElement(By.xpath(xpath)).sendKeys(Keys.CONTROL + "x");
+//        if (stack != null) {
+//            String value = stack.peek();
+//            System.out.println(value);
+//        }
+//        String result = getDriver().findElement(By.xpath(xpath)).getAttribute("value");
+//        if(result.equals("")){
+//            System.out.println("Menu 'Cut' is enable");
+//        }
+//        else{
+//            System.out.println("Menu 'Cut' is disable");
+//        }
+//    }
 
     @When("^I type \"([^\"]*)\" into element with xpath \"([^\"]*)\" 2$")
     public void iTypeIntoElementWithXpath(String text, String xpath) {
