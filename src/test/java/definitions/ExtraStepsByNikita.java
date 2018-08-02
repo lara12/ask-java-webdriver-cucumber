@@ -29,6 +29,13 @@ public class ExtraStepsByNikita {
         }
     }
 
+    @And("^I click on element \"([^\"]*)\" using JavaScript$")
+    public void revertToBackOldNew1(String user) throws Exception {
+        String func = "return document.evaluate(\"//form//div//div[contains(., '"+user+"')]\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click()";
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        Object users =  executor.executeScript(func);
+    }
+
     @Then("^I scroll to the element with xpath \"([^\"]*)\"$")
     public void iScrollToTheElementWithXpath(String xpath) {
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
