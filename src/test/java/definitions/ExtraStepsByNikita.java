@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import java.util.Random;
+import java.util.Stack;
 import static org.assertj.core.api.Assertions.fail;
 import static support.TestContext.getDriver;
 
@@ -28,6 +29,13 @@ public class ExtraStepsByNikita {
         }
     }
 
+    @And("^I click on element \"([^\"]*)\" using JavaScript$")
+    public void revertToBackOldNew1(String user) throws Exception {
+        String func = "return document.evaluate(\"//form//div//div[contains(., '"+user+"')]\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click()";
+        JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+        Object users =  executor.executeScript(func);
+    }
+
     @Then("^I scroll to the element with xpath \"([^\"]*)\"$")
     public void iScrollToTheElementWithXpath(String xpath) {
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
@@ -46,18 +54,23 @@ public class ExtraStepsByNikita {
     }
 
 
-    @Then("^I Cut inputed data from field with xpath \"([^\"]*)\"$")
-    public void iCutInputedDataFromFieldWithXpath(String xpath) {
-        //created by Nikitos (copyright enable)
-        getDriver().findElement(By.xpath(xpath)).sendKeys(Keys.CONTROL + "a");
-        String result = getDriver().findElement(By.xpath(xpath)).getAttribute("value");
-        if(result.equals("")){
-            System.out.println("Menu 'Cut' is enable");
-        }
-        else{
-            System.out.println("Menu 'Cut' is disable");
-        }
-    }
+//    @Then("^I Cut inputed data from field with xpath \"([^\"]*)\"$")
+//    public void iCutInputedDataFromFieldWithXpath(String xpath) {
+//        Stack<String> stack = new Stack<>();
+//        getDriver().findElement(By.xpath(xpath)).sendKeys(Keys.CONTROL + "a");
+//        getDriver().findElement(By.xpath(xpath)).sendKeys(Keys.CONTROL + "x");
+//        if (stack != null) {
+//            String value = stack.peek();
+//            System.out.println(value);
+//        }
+//        String result = getDriver().findElement(By.xpath(xpath)).getAttribute("value");
+//        if(result.equals("")){
+//            System.out.println("Menu 'Cut' is enable");
+//        }
+//        else{
+//            System.out.println("Menu 'Cut' is disable");
+//        }
+//    }
 
     @When("^I type \"([^\"]*)\" into element with xpath \"([^\"]*)\" 2$")
     public void iTypeIntoElementWithXpath(String text, String xpath) {
@@ -77,7 +90,6 @@ public class ExtraStepsByNikita {
 
     @And("^I input value with length (-?\\d+) on field with xpath \"([^\"]*)\" which include digits alphabet and special characters$")
     public void iInputValueWithLengthOnFieldWithXpath(int length, String xpath) {
-        //created by Nikitos (copyright enable)
         //use ASCII in DEC code column list for setting leftlimit and rightlimit
         //https://www.asciitable.com/
         int leftlimit = 33;
@@ -126,7 +138,6 @@ public class ExtraStepsByNikita {
 
     @Then("^I verify that required text \"([^\"]*)\" and text with xpath \"([^\"]*)\" is equal$")
     public void iValidateThatTextAndTextWithXpathIsEqual(String xpath, String text) {
-        //created by Nikitos (copyright enable)
         try{
             boolean equal = getDriver().findElement(By.xpath(xpath)).getText().equals(text);
             System.out.println(getDriver().findElement(By.xpath(xpath)).getText());
@@ -142,7 +153,6 @@ public class ExtraStepsByNikita {
 
     @Then("^I verify that text with xpath \"([^\"]*)\" is displayed")
     public void verifyError(String xpath){
-        //created by Nikitos (copyright enable)
         try{
             boolean error = getDriver().findElement(By.xpath(xpath)).isDisplayed();
             if (error){
@@ -155,7 +165,6 @@ public class ExtraStepsByNikita {
 
     @Then("^I verify that got value from the field with xpath \"([^\"]*)\" is equal to \"([^\"]*)\"$")
     public void iTryGetValueFromTheFieldWithXpath(String xpath, String requiredValue) {
-        //created by Nikitos (copyright enable)
         String getres = getDriver().findElement(By.xpath(xpath)).getAttribute("value");
         if(getres.equals(requiredValue)){
             System.out.println("Value from field is equal to required Value");

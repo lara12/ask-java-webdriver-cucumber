@@ -79,7 +79,7 @@ Feature: Last Name
     And I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
     Then I click on element with xpath "//button[@type='submit']"
     And I wait for 3 sec
-    And element with xpath "//*[contains(text(),'This field is required')]" should be displayed no delete "Nikita100" as "Student" with "" credentials
+    And element with xpath "(//mat-error[contains(text(),'')])[1]" should be displayed no delete "Nikita100" as "Student" with "" credentials
 
   @Test_Objects/properties/methods
   Scenario: "Russian characters input"
@@ -94,7 +94,7 @@ Feature: Last Name
     And I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
     Then I click on element with xpath "//button[@type='submit']"
     And I wait for 3 sec
-    And element with xpath "//*[contains(text(),'This field is required')]" should be displayed no delete "Nikita100" as "Student" with "" credentials
+    And element with xpath "(//mat-error[contains(text(),'')])[1]" should be displayed no delete "Nikita100" as "Student" with "" credentials
 
   @Test_Objects/properties/methods
   Scenario: Whitespace input
@@ -109,7 +109,7 @@ Feature: Last Name
     And I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
     Then I click on element with xpath "//button[@type='submit']"
     And I wait for 3 sec
-    And element with xpath "//*[contains(text(),'This field is required')]" should be displayed no delete "Nikita100" as "Student" with "" credentials
+    And element with xpath "(//mat-error[contains(text(),'')])[1]" should be displayed no delete "Nikita100" as "Student" with "" credentials
 
   @Test_Objects/properties/methods
   Scenario: Whitespace + charcters input
@@ -124,7 +124,7 @@ Feature: Last Name
     And I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
     Then I click on element with xpath "//button[@type='submit']"
     And I wait for 3 sec
-    And element with xpath "//*[contains(text(),'This field is required')]" should be displayed no delete "Nikita100" as "Student" with "" credentials
+    And element with xpath "(//mat-error[contains(text(),'')])[1]" should be displayed no delete "Nikita100" as "Student" with "" credentials
 
   @Test_Objects/properties/methods
   Scenario: Characters + Whitespace input
@@ -139,7 +139,7 @@ Feature: Last Name
     And I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
     Then I click on element with xpath "//button[@type='submit']"
     And I wait for 3 sec
-    And element with xpath "//*[contains(text(),'This field is required')]" should be displayed no delete "Nikita100" as "Student" with "" credentials
+    And element with xpath "(//mat-error[contains(text(),'')])[1]" should be displayed no delete "Nikita100" as "Student" with "" credentials
 
   @Test_Objects/properties/methods
   Scenario: Whitespace between elements
@@ -154,4 +154,4 @@ Feature: Last Name
     And I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
     Then I click on element with xpath "//button[@type='submit']"
     And I wait for 3 sec
-    And element with xpath "//*[contains(text(),'This field is required')]" should be displayed no delete "Nikita100" as "Student" with "" credentials
+    And element with xpath "(//mat-error[contains(text(),'')])[1]" should be displayed no delete "Nikita100" as "Student" with "" credentials
