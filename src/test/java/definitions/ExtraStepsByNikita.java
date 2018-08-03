@@ -6,9 +6,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import java.util.Random;
-import java.util.Stack;
 import static org.assertj.core.api.Assertions.fail;
 import static support.TestContext.getDriver;
 
@@ -30,10 +28,10 @@ public class ExtraStepsByNikita {
     }
 
     @And("^I click on element \"([^\"]*)\" using JavaScript$")
-    public void revertToBackOldNew1(String user) throws Exception {
+    public void revertToBackOldNew1(String user) {
         String func = "return document.evaluate(\"//form//div//div[contains(., '"+user+"')]\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click()";
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
-        Object users =  executor.executeScript(func);
+        executor.executeScript(func);
     }
 
     @Then("^I scroll to the element with xpath \"([^\"]*)\"$")
@@ -175,9 +173,8 @@ public class ExtraStepsByNikita {
 
     @Then("^element with xpath \"([^\"]*)\" should be displayed no delete \"([^\"]*)\" as \"([^\"]*)\" with \"([^\"]*)\" credentials$")
     public void elementWithXpathShouldBeDisplayedNoDelete(String xpath, String name, String userrule, String credentials) throws InterruptedException {
-        boolean flag;
         try {
-            flag = getDriver().findElement(By.xpath(xpath)).isDisplayed();
+            getDriver().findElement(By.xpath(xpath)).isDisplayed();
         }catch(Exception e){
             iDeleteUserWhichIsATeacher(name, userrule, credentials);
             Thread.sleep(1000);
@@ -214,7 +211,7 @@ public class ExtraStepsByNikita {
     }
 
     @And("^Revert to back \"([^\"]*)\" old \"([^\"]*)\" new1 \"([^\"]*)\"$")
-    public void revertToBackOldNew(String arg0, String old, String new1) throws Exception {
+    public void revertToBackOldNew(String old, String new1) throws Exception {
         iClickOnElementWithXpath("//h5[contains(text(),'Setting')]");
         iClickOnElementWithXpath("//span[contains(text(),'Change Your Password')]");
         iTypeIntoElementWithXpath(old,"//input[@placeholder='Password']");
