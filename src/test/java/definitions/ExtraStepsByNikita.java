@@ -183,7 +183,7 @@ public class ExtraStepsByNikita {
     }
 
     @And("^Revert to back \"([^\"]*)\" old \"([^\"]*)\" new1 \"([^\"]*)\"$")
-    public void revertToBackOldNew(String old, String new1) throws Exception {
+    public void revertToBackOldNew(String object, String old, String new1) throws Exception {
         iClickOnElementWithXpath("//h5[contains(text(),'Setting')]");
         iClickOnElementWithXpath("//span[contains(text(),'Change Your Password')]");
         iTypeIntoElementWithXpath(old,"//input[@placeholder='Password']");
