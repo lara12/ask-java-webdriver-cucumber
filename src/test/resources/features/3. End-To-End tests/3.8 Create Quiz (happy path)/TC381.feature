@@ -3,7 +3,7 @@ Feature: Create Quiz
   Background: Login into account
     Given I Login
 
-  @TC381
+  @3.End-To-End_tests
   Scenario Outline: Teacher can create Quiz with one Textual question
 
     When Page title is "Assessment Control @ Portnov"

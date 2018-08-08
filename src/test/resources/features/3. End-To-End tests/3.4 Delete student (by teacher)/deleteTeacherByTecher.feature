@@ -2,15 +2,11 @@
 Feature: Teacher can delete other teacher
 
   @3.End-To-End_tests
-  Scenario Outline: Delete teacher
+  Scenario: Delete teacher
 
 
     Given I Login
     Then I navigate to "User's Management" page
     Then I wait for 3 sec
     Then I choose tab "Teachers"
-    Then I delete Teacher with name "<data>"
-
-    Examples:
-      | data |
-      | Tech Teach|
+    Then I delete Teacher with name "fox1 fox2"
