@@ -96,25 +96,25 @@ Feature: Password
     And I wait for 3 sec
     And I delete user "Dovgych100" which is a "Student" with "" credentials other user
 
-  @Test_Objects/properties/methods
-  Scenario: "Cut" menu item on "Password" field is disabled
-    Given I open url "http://local.school.portnov.com:4520/#/login"
-    And I wait for 1 sec
-    When I click on element with xpath "//span[contains(text(),'Register Now')]" 2
-    And I type "0123456789" into element with xpath "//input[@placeholder='Password']"
+#  @Test_Objects/properties/methods
+#  Scenario: "Cut" menu item on "Password" field is disabled
+#    Given I open url "http://local.school.portnov.com:4520/#/login"
+#    And I wait for 1 sec
+#    When I click on element with xpath "//span[contains(text(),'Register Now')]" 2
+#    And I type "0123456789" into element with xpath "//input[@placeholder='Password']"
 #    Then I Cut inputed data from field with xpath "//input[@placeholder='Password']"
-    When I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
+#    When I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
 #    Then I Cut inputed data from field with xpath "//input[@placeholder='Confirm Password']"
-
-  @Test_Objects/properties/methods
-  Scenario: "Copy" menu item on "Passwosd" field is disabled
-    Given I open url "http://local.school.portnov.com:4520/#/login"
-    And I wait for 1 sec
-    When I click on element with xpath "//span[contains(text(),'Register Now')]" 2
-    And I type "0123456789" into element with xpath "//input[@placeholder='Password']" 2
-    Then I verify that got value from the field with xpath "//input[@placeholder='Password']" is equal to "0123456789"
-    When I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
-    Then I verify that got value from the field with xpath "//input[@placeholder='Confirm Password']" is equal to "0123456789"
+#
+#  @Test_Objects/properties/methods
+#  Scenario: "Copy" menu item on "Passwosd" field is disabled
+#    Given I open url "http://local.school.portnov.com:4520/#/login"
+#    And I wait for 1 sec
+#    When I click on element with xpath "//span[contains(text(),'Register Now')]" 2
+#    And I type "0123456789" into element with xpath "//input[@placeholder='Password']" 2
+#    Then I verify that got value from the field with xpath "//input[@placeholder='Password']" is equal to "0123456789"
+#    When I type "0123456789" into element with xpath "//input[@placeholder='Confirm Password']"
+#    Then I verify that got value from the field with xpath "//input[@placeholder='Confirm Password']" is equal to "0123456789"
 
   @Test_Objects/properties/methods
   Scenario: Whitespace input
