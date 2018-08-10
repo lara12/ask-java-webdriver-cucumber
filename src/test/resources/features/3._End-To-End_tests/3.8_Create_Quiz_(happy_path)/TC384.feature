@@ -3,7 +3,7 @@ Feature: Create Quiz with Show-stoper questions
   Background: Login into account
     Given I Login
 
-  @TC384
+  @3.End-To-End_tests
   Scenario Outline: Teacher can create Quiz with one Textual question with Show-stoper
 
     When Page title is "Assessment Control @ Portnov"

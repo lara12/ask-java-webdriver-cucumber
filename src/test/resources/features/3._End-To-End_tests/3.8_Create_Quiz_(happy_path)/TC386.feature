@@ -4,7 +4,7 @@ Feature: Create Quiz
     Given I Login
 
 
-  @TC386
+  @3.End-To-End_tests
   Scenario Outline: Teacher can create Quiz with Multiple-choice question + Ohter
 
     Then Page title is "Assessment Control @ Portnov"
