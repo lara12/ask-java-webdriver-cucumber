@@ -36,7 +36,7 @@ Feature: Create Assignment (by teacher) cucumber
     Then I click on element using JavaScript with xpath "//button[@type='submit']"
     Then I click on element using JavaScript with xpath "//*[contains(text(),'cucumber do not delete')]"
     Then I wait for element with xpath "//*[contains(text(),'cucumber do not delete')]/../../..//*[contains(text(),'Pending')]" to be present
-    Then I wait for 2 sec
+    Then I wait for 4 sec
     Then I click on element using JavaScript with xpath "//*[contains(text(),'cucumber do not delete')]"
     Then element with xpath "//*[contains(text(),'cucumber do not delete')]/../../..//*[@*='name']" has the same name of student
     Then I click on element using JavaScript with xpath "//*[contains(text(),'cucumber do not delete')]/..//button"
