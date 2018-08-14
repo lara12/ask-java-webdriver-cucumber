@@ -6,11 +6,17 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
+
+import java.util.ArrayList;
 import java.util.Random;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static support.TestContext.getDriver;
 
 public class ExtraStepsByNikita {
+
     @Then("^I click on element with xpath \"([^\"]*)\" 2$")
     public void iClickOnElementWithXpath(String xpath) {
         for(int second = 0; ;second++){
@@ -28,8 +34,9 @@ public class ExtraStepsByNikita {
     }
 
     @And("^I click on element \"([^\"]*)\" using JavaScript$")
-    public void revertToBackOldNew1(String user) {
-        String func = "return document.evaluate(\"//form//div//div[contains(., '"+user+"')]\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click()";
+    public void iClickOnElementUsingJavaScript(String xpath) {
+//        String func = "return document.evaluate(\"//form//div//div[contains(., '"+user+"')]\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click()";
+        String func = "return document.evaluate(\""+xpath+"\", document, null, XPathResult.ANY_TYPE, null).iterateNext().click()";
         JavascriptExecutor executor = (JavascriptExecutor) getDriver();
         executor.executeScript(func);
     }
@@ -197,7 +204,11 @@ public class ExtraStepsByNikita {
     @Then("^I delete user \"([^\"]*)\" which is a \"([^\"]*)\" with \"([^\"]*)\" credentials other user$")
     public void iDeleteUserWhichIsATeacher(String lastname, String userrule, String credentials) {
         if(credentials.equals("")){
-            loginAsTeacherUsernamePassword("nikita_teacher@amail.club","0123456789");
+            try {
+                loginAsTeacherUsernamePassword("nikita_teacher@amail.club","0123456789");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         iClickOnElementWithXpath("//h5[contains(text(),'Management')]");
         if(userrule.equals("Student")){
@@ -217,50 +228,75 @@ public class ExtraStepsByNikita {
     }
 
     @When("^login as teacher username \"([^\"]*)\" password \"([^\"]*)\"$")
-    public void loginAsTeacherUsernamePassword(String username, String password) {
-        st.iOpenUrl("http://local.school.portnov.com:4520/#/login");
-        st.iTypeIntoElementWithXpath(username, "//input[@formcontrolname='email']");
-        st.iTypeIntoElementWithXpath(password, "//input[@formcontrolname='password']");
-        st.iClickOnElementWithXpath("//button[@type='submit']");
-        try {
-            st.iWaitForSec(3);
-            if (getDriver().findElement(By.xpath("(//*[contains(text(),'Authentication failed. User not found or password does not match')])[2]")).isDisplayed()) {
-                iClickOnElementWithXpath("//*[contains(text(),'I forgot my password')]");
-                iTypeIntoElementWithXpath(username,"//*[@placeholder]");
-
-                st.iOpenUrl("https://getnada.com/#");
-                st.iWaitForSec(1);
-                iClickOnElementWithXpath("//span[contains(text(),'Add Inbox')]");
-                st.iClearElementWithXpath("//input[@placeholder]");
-                iTypeIntoElementWithXpath("nikita_teacher", "//input[@placeholder]");
-                getDriver().findElement(By.id("domain")).click();
-                iClickOnElementWithXpath("//*[@value='amail.club']");
-                iClickOnElementWithXpath("//*[@class='button success']");
-
-                iClickOnElementWithXpath("//span[contains(text(),'nikita_teacher@amail.club')]");
-                iClickOnElementWithXpath("//li[@class='msg_item'][1]");
-                st.iWaitForSec(2);
-                JavascriptExecutor executor = (JavascriptExecutor) getDriver();
-                for(int second = 0; ;second++){
-                    if(second >= 1000){
-                        fail("Timeout for element" + "//a[contains(text(),'Reset Password')]");
-                    }
-                    try{
-                        executor.executeScript("arguments[0].scrollIntoView(true);", getDriver().findElement(By.xpath("//*[contains(text(),'Reset Password')]")));
-                        if(getDriver().findElement(By.xpath("//*[contains(text(),'Reset Password')]")).isDisplayed()){
-                            break;
-                        }
-                    }
-                    catch(Exception e){}
-                }
-                iClickOnElementWithXpath("//*[contains(text(),'Reset Password')]");
-                iTypeIntoElementWithXpath("0123456789","//input[@placeholder='New Password']");
-                iTypeIntoElementWithXpath("0123456789","//input[@placeholder='Confirm New Password']");
-                st.iWaitForSec(1);
+    public void loginAsTeacherUsernamePassword(String username, String password) throws Exception {
+         try {
+             st.iOpenUrl("http://local.school.portnov.com:4520/#/login");
+             st.iTypeIntoElementWithXpath(username, "//input[@formcontrolname='email']");
+             st.iTypeIntoElementWithXpath(password, "//input[@formcontrolname='password']");
+             st.iClickOnElementWithXpath("//button[@type='submit']");
+             st.iWaitForSec(3);
+             getDriver().findElement(By.xpath("//h3[text()='Nikita Dovhych']")).isDisplayed();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+         catch (Exception e) {
+             restorePassword(username, password);
+         }
+    }
+
+    private void restorePassword(String username, String password) throws Exception {
+        try {
+            iClickOnElementWithXpath("//*[contains(text(),'I forgot my password')]");
+            iTypeIntoElementWithXpath(username,"//*[@placeholder]");
+            iClickOnElementWithXpath("//*[contains(text(),'Request Password Reset')]");
+            st.iWaitForSec(3);
+            st.iOpenUrl("https://getnada.com/#");
+            st.iWaitForSec(1);
+            iClickOnElementWithXpath("//span[contains(text(),'Add Inbox')]");
+            st.iClearElementWithXpath("//input[@placeholder]");
+            iTypeIntoElementWithXpath("nikita_teacher", "//input[@placeholder]");
+            getDriver().findElement(By.id("domain")).click();
+            iClickOnElementWithXpath("//*[@value='amail.club']");
+            iClickOnElementWithXpath("//*[@class='button success']");
+
+            iClickOnElementWithXpath("//span[contains(text(),'nikita_teacher@amail.club')]");
+            iClickOnElementWithXpath("//li[@class='msg_item'][1]");
+            st.iWaitForSec(2);
+            st.iSwitchToIframeWithXpath("//iframe[@id='idIframe']");
+            String href = null;
+            iScrollToTheElementWithXpath("//*[contains(text(),'Reset Password')]");
+            iClickOnElementWithXpath("//*[contains(text(),'Reset Password')]");
+            st.iWaitForSec(2);
+            String deafult = getDriver().getWindowHandle();
+            ArrayList tabs = new ArrayList (getDriver().getWindowHandles());
+            getDriver().switchTo().window(String.valueOf(tabs.get(1)));
+            iTypeIntoElementWithXpath(password,"//input[@placeholder='New Password']");
+            iTypeIntoElementWithXpath(password,"//input[@placeholder='Confirm New Password']");
+            iClickOnElementWithXpath("//span[@class='mat-button-wrapper']");
+            st.iWaitForSec(2);
+            getDriver().close();
+            getDriver().switchTo().window(deafult);
+            loginAsTeacherUsernamePassword(username, password);
+        }
+        catch (Exception e) {
+            restorePassword(username, password);
         }
     }
 
+    @Then("^I clean up assigment with$")
+    public void cleanAssigments() throws Exception{
+        getDriver().findElement(By.xpath("//h5[contains(text(),'Assignments')]")).click();
+        st.iWaitForSec(3);
+        boolean staleElement = getDriver().findElement(By.xpath("(//*[contains(text(),'cucumber do not delete')])[1]")).isDisplayed();;
+        while(staleElement){
+            try{
+                getDriver().findElement(By.xpath("(//*[contains(text(),'cucumber do not delete')])[1]")).isDisplayed();
+                getDriver().findElement(By.xpath("//*[contains(text(),'cucumber do not delete')]/..//button")).click();
+                getDriver().findElement(By.xpath("//*[contains(text(),'Delete')]")).click();
+                getDriver().findElement(By.xpath("//*[@*='Close dialog'][2]")).click();
+                st.iWaitForSec(2);
+            } catch(StaleElementReferenceException e){
+                staleElement = true;
+            }
+        }
+        System.out.println(staleElement);
+    }
 }

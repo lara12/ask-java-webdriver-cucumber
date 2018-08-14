@@ -67,27 +67,27 @@ Feature: 2.8.2 Change your password
     And element with xpath "//input[@placeholder='New Password' and @type='password']" should be enabled
     And element with xpath "//input[@placeholder='Confirm New Password' and @type='password']" should be enabled
 
-  @Area_of_independent_testing
-  Scenario: "Cut" menu item on "Password" field is disabled
-    When I click on element with xpath "//h5[contains(text(),'Setting')]" 2
-    And I click on element with xpath "//span[contains(text(),'Change Your Password')]" 2
-    And I type "0123456789" into element with xpath "//input[@placeholder='Password']"
+#  @Area_of_independent_testing
+#  Scenario: "Cut" menu item on "Password" field is disabled
+#    When I click on element with xpath "//h5[contains(text(),'Setting')]" 2
+#    And I click on element with xpath "//span[contains(text(),'Change Your Password')]" 2
+#    And I type "0123456789" into element with xpath "//input[@placeholder='Password']"
 #    Then I Cut inputed data from field with xpath "//input[@placeholder='Password']"
-    When I type "9876543210" into element with xpath "//input[@placeholder='New Password']"
+#    When I type "9876543210" into element with xpath "//input[@placeholder='New Password']"
 #    Then I Cut inputed data from field with xpath "//input[@placeholder='New Password']"
-    When I type "9876543210" into element with xpath "//input[@placeholder='Confirm New Password']"
+#    When I type "9876543210" into element with xpath "//input[@placeholder='Confirm New Password']"
 #    Then I Cut inputed data from field with xpath "//input[@placeholder='Confirm New Password']"
 
-  @Area_of_independent_testing
-  Scenario: "Copy" menu item on "Passwosd" field is disabled
-    When I click on element with xpath "//h5[contains(text(),'Setting')]" 2
-    And I click on element with xpath "//span[contains(text(),'Change Your Password')]" 2
-    And I type "0123456789" into element with xpath "//input[@placeholder='Password']" 2
-    Then I verify that got value from the field with xpath "//input[@placeholder='Password']" is equal to "0123456789"
-    When I type "9876543210" into element with xpath "//input[@placeholder='New Password']"
-    Then I verify that got value from the field with xpath "//input[@placeholder='New Password']" is equal to "0123456789"
-    When I type "9876543210" into element with xpath "//input[@placeholder='Confirm New Password']"
-    Then I verify that got value from the field with xpath "//input[@placeholder='Confirm New Password']" is equal to "0123456789"
+#  @Area_of_independent_testing
+#  Scenario: "Copy" menu item on "Passwosd" field is disabled
+#    When I click on element with xpath "//h5[contains(text(),'Setting')]" 2
+#    And I click on element with xpath "//span[contains(text(),'Change Your Password')]" 2
+#    And I type "0123456789" into element with xpath "//input[@placeholder='Password']" 2
+#    Then I verify that got value from the field with xpath "//input[@placeholder='Password']" is equal to "0123456789"
+#    When I type "9876543210" into element with xpath "//input[@placeholder='New Password']"
+#    Then I verify that got value from the field with xpath "//input[@placeholder='New Password']" is equal to "0123456789"
+#    When I type "9876543210" into element with xpath "//input[@placeholder='Confirm New Password']"
+#    Then I verify that got value from the field with xpath "//input[@placeholder='Confirm New Password']" is equal to "0123456789"
 
   @Area_of_independent_testing
   Scenario: "Verify user can create password with spesial characters"
