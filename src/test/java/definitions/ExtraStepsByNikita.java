@@ -9,6 +9,8 @@ import org.openqa.selenium.JavascriptExecutor;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 import static support.TestContext.getDriver;
 
@@ -277,4 +279,19 @@ public class ExtraStepsByNikita {
             restorePassword(username, password);
         }
     }
+
+//    @Then("^I clean up assigment with$")
+//    public void cleanAssigments() {
+//        getDriver().findElement(By.xpath("//h5[contains(text(),'Assignments')]")).click();
+//
+//        System.out.println("ethukylhjgndsfETzreytkucvlh.jb,vjmhnxgbfvdc");
+////        boolean check = getDriver().findElement(By.xpath("(//*[contains(text(),'cucumber do not delete')])[1]")).isDisplayed();
+//        System.out.println(getDriver().findElement(By.xpath("(//*[contains(text(),'cucumber do not delete')])[1]")).isEnabled());
+//
+////        while(!check){
+////            getDriver().findElement(By.xpath("//*[contains(text(),'cucumber do not delete')]/..//button")).click();
+////            getDriver().findElement(By.xpath("//*[contains(text(),'Delete')]")).click();
+////            getDriver().findElement(By.xpath("//*[@*='Close dialog'][2]")).click();
+////        }
+//    }
 }
