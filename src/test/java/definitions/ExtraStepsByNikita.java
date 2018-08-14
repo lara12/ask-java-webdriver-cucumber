@@ -6,6 +6,7 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -280,18 +281,22 @@ public class ExtraStepsByNikita {
         }
     }
 
-//    @Then("^I clean up assigment with$")
-//    public void cleanAssigments() {
-//        getDriver().findElement(By.xpath("//h5[contains(text(),'Assignments')]")).click();
-//
-//        System.out.println("ethukylhjgndsfETzreytkucvlh.jb,vjmhnxgbfvdc");
-////        boolean check = getDriver().findElement(By.xpath("(//*[contains(text(),'cucumber do not delete')])[1]")).isDisplayed();
-//        System.out.println(getDriver().findElement(By.xpath("(//*[contains(text(),'cucumber do not delete')])[1]")).isEnabled());
-//
-////        while(!check){
-////            getDriver().findElement(By.xpath("//*[contains(text(),'cucumber do not delete')]/..//button")).click();
-////            getDriver().findElement(By.xpath("//*[contains(text(),'Delete')]")).click();
-////            getDriver().findElement(By.xpath("//*[@*='Close dialog'][2]")).click();
-////        }
-//    }
+    @Then("^I clean up assigment with$")
+    public void cleanAssigments() throws Exception{
+        getDriver().findElement(By.xpath("//h5[contains(text(),'Assignments')]")).click();
+        st.iWaitForSec(3);
+        boolean staleElement = getDriver().findElement(By.xpath("(//*[contains(text(),'cucumber do not delete')])[1]")).isDisplayed();;
+        while(staleElement){
+            try{
+                getDriver().findElement(By.xpath("(//*[contains(text(),'cucumber do not delete')])[1]")).isDisplayed();
+                getDriver().findElement(By.xpath("//*[contains(text(),'cucumber do not delete')]/..//button")).click();
+                getDriver().findElement(By.xpath("//*[contains(text(),'Delete')]")).click();
+                getDriver().findElement(By.xpath("//*[@*='Close dialog'][2]")).click();
+                st.iWaitForSec(2);
+            } catch(StaleElementReferenceException e){
+                staleElement = true;
+            }
+        }
+        System.out.println(staleElement);
+    }
 }
