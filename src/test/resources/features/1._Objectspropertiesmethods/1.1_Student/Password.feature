@@ -161,3 +161,10 @@ Feature: Password
     When I click on element with xpath "//span[contains(text(),'Register Now')]" 2
     And element with xpath "//input[@placeholder='Password' and @type='password']" should be enabled
     And element with xpath "//input[@placeholder='Confirm Password' and @type='password']" should be enabled
+  @Test_Objects/properties/methods
+  Scenario: Password field displays input in bullets
+    Given I open url "http://local.school.portnov.com:4520/#/login"
+    And I wait for 1 sec
+    When I click on element with xpath "//span[contains(text(),'Register Now')]" 2
+    And element with xpath "//input[@placeholder='Password' and @type='password']" should be enabled
+    And element with xpath "//input[@placeholder='Confirm Password' and @type='password']" should be enabled
